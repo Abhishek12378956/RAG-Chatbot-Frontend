@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: chatbot-frontend
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: "./build"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: REACT_APP_API_URL
+        value: ${API_URL}
+        generateValue: "https://rag-chatbot-backend-3.onrender.com"
+      - key: GENERATE_SOURCEMAP
+        value: "false"
+    routes:
+      - type: rewrite
+        source: "/*"
+        destination: "/index.html"
